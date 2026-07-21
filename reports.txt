@@ -1,0 +1,56 @@
+{
+    "EC2_Instances": [
+        [
+            "i-06b4742cdcc92fbc7",
+            "t2.small",
+            "stopped"
+        ],
+        [
+            "i-0805ffbf4a5c04294",
+            "t2.micro",
+            "stopped"
+        ],
+        [
+            "i-0238bc43c754f20a2",
+            "t2.medium",
+            "stopped"
+        ],
+        [
+            "i-00a7b14f70174875a",
+            "t2.medium",
+            "stopped"
+        ],
+        [
+            "i-0e488b30fc14994a4",
+            "t2.micro",
+            "stopped"
+        ]
+    ],
+    "Lambda_Functions": [
+        [
+            "medium-blog-lambda2",
+            "python3.11",
+            "2025-11-14T16:11:28.000+0000"
+        ],
+        [
+            "MyPython38Function",
+            "python3.11",
+            "2025-11-14T16:11:28.000+0000"
+        ],
+        [
+            "dummyName",
+            "python3.12",
+            "2025-11-28T17:56:22.000+0000"
+        ],
+        [
+            "medium-blog-lambda3",
+            "python3.11",
+            "2025-11-14T16:11:28.000+0000"
+        ],
+        [
+            "medium-blog-lambda1",
+            "python3.11",
+            "2025-11-14T16:11:29.000+0000"
+        ]
+    ]
+}
