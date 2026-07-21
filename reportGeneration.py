@@ -5,16 +5,16 @@
 
 import boto3
 import json
-# from email.mime.multipart import MIMEMultipart
-# from email.mime.text import MIMEText
-# from email.mime.base import MIMEBase # For attaching files
-# from email import encoders  # For encoding the attachments
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase # For attaching files
+from email import encoders  # For encoding the attachments
 
 
 ec2 = boto3.client("ec2")
 lambda_client = boto3.client("lambda")
 s3 = boto3.client("s3")
-# ses = boto3.client("ses")
+ses = boto3.client("ses")
 
 
 aws_region = "us-east-1"
