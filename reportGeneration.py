@@ -36,101 +36,103 @@ def lambda_data():
         for function in lambda_client.list_functions().get("Functions")
     ]
 
-# def s3_data():
-#     return [
-#         (bucket["Name"],
-#          bucket["CreationDate"].strftime("%Y-%m-%d %H:%M:%S"))
-#         for bucket in s3.list_buckets().get("Buckets")
-#     ]
+def s3_data():
+    return [
+        (bucket["Name"],
+         bucket["CreationDate"].strftime("%Y-%m-%d %H:%M:%S"))
+        for bucket in s3.list_buckets().get("Buckets")
+    ]
 
 
-data = {
-    "EC2_Instances": ec2_data(),
-    "Lambda_Functions": lambda_data()
-}
+# data = {
+#     "EC2_Instances": ec2_data(),
+#     "Lambda_Functions": lambda_data()
+# }
 
-with open("reports.txt", "w") as f:
-    f.write(json.dumps(data, indent=4))  # Writing the data to a reports.txt file in JSON format
-
-
-
+# with open("reports.txt", "w") as f:
+#     f.write(json.dumps(data, indent=4))  # Writing the data to a reports.txt file in JSON format
 
 
 
-# # To combine all three functions and print their outputs in dictionary format
-# def generate_data():
-#     return {
-#         "EC2_Instances": ec2_data(),
-#         "Lambda_Functions": lambda_data()
-#         #,
-#         #"S3_Buckets": s3_data()
-#     } 
 
-# def write_report_file(data, filename):
-#     with open(filename, "w") as f: # Writing the combined data to a reports.txt file in JSON format
-#         json.dump(data, f, indent=4)
+
+
+# To combine all three functions and print their outputs in dictionary format
+# The first thing to do if I want to send data to the business team is to combine all three functions and print their outputs in dictionary format.
+def generate_data():
+    return {
+        "EC2_Instances": ec2_data(),
+        "Lambda_Functions": lambda_data(),
+        "S3_Buckets": s3_data()
+    }
+
+# The second thing to do is to write the combined data to a reports.txt file in JSON format. I will use the json module to do this.
+def write_report_file(data, filename):
+    with open(filename, "w") as f: # Writing the combined data to a reports.txt file in JSON format
+        json.dump(data, f, indent=4)
     
+# The third thing to do is to build email with the reports.txt file attached to a specified recipient using AWS SES. I will use the boto3 library to do this.
+def build_email_message(from_email, to_email, subject, body, attachment_filename):
+    msg = MIMEMultipart()
+    msg['From'] = from_email
+    msg['To'] = ", ".join(to_email)
+    msg['Subject'] = subject
+    msg.attach(body)
 
-# def build_email_message(from_email, to_email, subject, body, attachment_filename):
-#     msg = MIMEMultipart()
-#     msg['From'] = from_email
-#     msg['To'] = ", ".join(to_email)
-#     msg['Subject'] = subject
-#     msg.attach(body)
+    with open(attachment_filename, "rb") as attachment:  #rb is readbytes 
+        part = MIMEBase("application", "octet-stream")
+        part.set_payload(attachment.read())
 
-#     with open(attachment_filename, "rb") as attachment:  #rb is readbytes 
-#         part = MIMEBase("application", "octet-stream")
-#         part.set_payload(attachment.read())
+    # Encode file in ASCII characters
+    encoders.encode_base64(part)
 
-#     # Encode file in ASCII characters
-#     encoders.encode_base64(part)
-
-#     # Add header
-#     part.add_header("Content-Disposition", f"attachment; filename= {attachment_filename}")
-#     msg.attach(part) # Attach the file to the message
+    # Add header
+    part.add_header("Content-Disposition", f"attachment; filename= {attachment_filename}")
+    msg.attach(part) # Attach the file to the message
     
-#     return msg
+    return msg
 
-
-# def send_email(from_email, to_email, message):
-#     response = ses.send_raw_email(
-#         Source=from_email,
-#         Destinations= to_email,
-#         RawMessage={
-#             'Data': message.as_string()
-#         },
+# The fourth thing to do is to send the email using AWS SES. I will use the boto3 library to do this.
+def send_email(from_email, to_email, message):
+    response = ses.send_raw_email(
+        Source=from_email,
+        Destinations= to_email,
+        RawMessage={
+            'Data': message.as_string()
+        },
         
-#     )
-#     return response.get('MessageId')
+    )
+    return response.get('MessageId')
 
 
 
 
-# # The function will execute the whole logic
-# def run():
-#     attachment_filename = "cloud_report.txt"
-#     data = generate_data()
-#     write_report_file(data, attachment_filename)
-#     business_team = "businesskpmgsol@kpmg.com"
-#     from_email = "adetayo.eyelade2@gmail.com"
-#     to_email = ["adetayo.eyelade@usach.cl"]
-#     subject = "Better: Daily Cloud Report"
-#     body =  f"""
+# The function will execute the whole logic
+def run():
+    attachment_filename = "cloud_report.txt"
+    data = generate_data()
+    write_report_file(data, attachment_filename)
+    business_team = "adetayo.eyelade2@gmail.com"
+    
+    from_email = "ajiboyemoyosola@gmail.com"
+    to_email = ["adetayo.eyelade@usach.cl"]
+    subject = "Better: Daily Cloud Report"
+    body =  f"""
 
-#             Hi all,
-#             Please find today cloud report attached.
-#             Reach out to Cloud Automation Team for any queries on below email addresses. \n
-#             {business_team}
-#             Regards,
-#             Cloud Automation Team
+            Hi all,
+            Please find today cloud report attached.
+            Reach out to Cloud Automation Team for any queries on below email addresses. \n
+            {business_team}
+            Regards,
+            Cloud Automation Team
 
-#             """
-#     text_body = MIMEText(body, "plain")
-#     email_message = build_email_message(from_email, to_email, subject, text_body, attachment_filename)
-#     send_email(from_email, to_email, email_message)
+            """
+    text_body = MIMEText(body, "plain")
+    email_message = build_email_message(from_email, to_email, subject, text_body, attachment_filename)
+    send_email(from_email, to_email, email_message)
 
-# if __name__ == "__main__":
-#     run()
+if __name__ == "__main__":
+    run()
 
 
 #print(lambda_data())

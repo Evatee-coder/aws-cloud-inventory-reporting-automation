@@ -1,0 +1,130 @@
+{
+    "EC2_Instances": [
+        [
+            "i-06b4742cdcc92fbc7",
+            "t2.small",
+            "stopped"
+        ],
+        [
+            "i-0805ffbf4a5c04294",
+            "t2.micro",
+            "stopped"
+        ],
+        [
+            "i-0238bc43c754f20a2",
+            "t2.medium",
+            "stopped"
+        ],
+        [
+            "i-00a7b14f70174875a",
+            "t2.medium",
+            "stopped"
+        ],
+        [
+            "i-0e488b30fc14994a4",
+            "t2.micro",
+            "stopped"
+        ]
+    ],
+    "Lambda_Functions": [
+        [
+            "medium-blog-lambda2",
+            "python3.11",
+            "2025-11-14T16:11:28.000+0000"
+        ],
+        [
+            "MyPython38Function",
+            "python3.11",
+            "2025-11-14T16:11:28.000+0000"
+        ],
+        [
+            "dummyName",
+            "python3.12",
+            "2025-11-28T17:56:22.000+0000"
+        ],
+        [
+            "medium-blog-lambda3",
+            "python3.11",
+            "2025-11-14T16:11:28.000+0000"
+        ],
+        [
+            "medium-blog-lambda1",
+            "python3.11",
+            "2025-11-14T16:11:29.000+0000"
+        ]
+    ],
+    "S3_Buckets": [
+        [
+            "adetayowebhosting",
+            "2025-03-01 15:29:14"
+        ],
+        [
+            "cf-templates-1u9qibpvvtdn7-us-east-1",
+            "2025-04-21 23:27:33"
+        ],
+        [
+            "charles-new-source-bucket",
+            "2025-02-16 18:12:48"
+        ],
+        [
+            "clean-bucket-216989097838",
+            "2025-11-20 17:34:21"
+        ],
+        [
+            "cross-account-tayosource",
+            "2025-02-15 22:17:06"
+        ],
+        [
+            "destination-account-from-charles",
+            "2025-02-16 18:22:46"
+        ],
+        [
+            "destination-account-to-charles2",
+            "2025-02-16 18:26:14"
+        ],
+        [
+            "githubbackend",
+            "2025-07-14 22:06:43"
+        ],
+        [
+            "landing-bucket-216989097838",
+            "2025-11-20 17:33:40"
+        ],
+        [
+            "logging-bucket-216989097838",
+            "2025-12-05 21:26:52"
+        ],
+        [
+            "myawsinitialbucket",
+            "2025-02-14 16:46:43"
+        ],
+        [
+            "mydestinationbucketbrz",
+            "2025-02-15 18:40:09"
+        ],
+        [
+            "mynewbucketversioning",
+            "2025-02-14 17:14:05"
+        ],
+        [
+            "mysourcebucketsan1",
+            "2025-02-15 18:39:09"
+        ],
+        [
+            "source-bucket-to-charles",
+            "2025-02-16 17:16:56"
+        ],
+        [
+            "sourcebucketaccount",
+            "2025-02-15 21:14:17"
+        ],
+        [
+            "state-bucket-216989097838",
+            "2025-10-07 19:44:29"
+        ],
+        [
+            "static-website-adetayo",
+            "2025-02-18 18:30:14"
+        ]
+    ]
+}
