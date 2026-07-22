@@ -112,7 +112,7 @@ Failures return consistent responses and are logged to CloudWatch, improving ope
 
 # Repository Structure
 
-![Email Notification](docs/images/cloudReport.png)
+![Repository Structure](docs/images/repoStructure.png)
 
 ```text
 .
