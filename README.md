@@ -26,7 +26,6 @@ The project mirrors a production cloud operations workflow used for governance, 
 - [Engineering Decisions](#engineering-decisions)
 - [Repository Structure](#repository-structure)
 - [Setup and Usage](#setup-and-usage)
-- [IAM Permissions](#iam-permissions)
 - [Challenges and Fixes](#challenges-and-fixes)
 - [Future Improvements](#future-improvements)
 - [Skills Demonstrated](#skills-demonstrated)
@@ -170,38 +169,6 @@ If your SES account is in the sandbox, verify the recipient email address as wel
 ```bash
 python3 reportGeneration.py
 ```
-
----
-
-# IAM Permissions
-
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ec2:DescribeInstances",
-        "lambda:ListFunctions",
-        "s3:ListAllMyBuckets"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ses:SendRawEmail"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-```
-
-Attach the AWS managed policy:
-
-- `AWSLambdaBasicExecutionRole`
 
 ---
 
