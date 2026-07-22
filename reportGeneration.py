@@ -44,19 +44,6 @@ def s3_data():
     ]
 
 
-# data = {
-#     "EC2_Instances": ec2_data(),
-#     "Lambda_Functions": lambda_data()
-# }
-
-# with open("reports.txt", "w") as f:
-#     f.write(json.dumps(data, indent=4))  # Writing the data to a reports.txt file in JSON format
-
-
-
-
-
-
 # To combine all three functions and print their outputs in dictionary format
 # The first thing to do if I want to send data to the business team is to combine all three functions and print their outputs in dictionary format.
 def generate_data():
@@ -112,10 +99,10 @@ def run():
     attachment_filename = "cloud_report.txt"
     data = generate_data()
     write_report_file(data, attachment_filename)
-    business_team = "adetayo.eyelade2@gmail.com"
-    
-    from_email = "ajiboyemoyosola@gmail.com"
-    to_email = ["adetayo.eyelade@usach.cl"]
+    business_team = "xxxxxxx@gmail.com"
+
+    from_email = "yyyyyyyyy@gmail.com"
+    to_email = ["zzzzzzzz@usach.cl"]
     subject = "Better: Daily Cloud Report"
     body =  f"""
 
@@ -135,7 +122,6 @@ if __name__ == "__main__":
     run()
 
 
-#print(lambda_data())
 
 
 

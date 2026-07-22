@@ -97,9 +97,9 @@ def lambda_handler(event, context):
         filepath = write_report_file(data, attachment_filename)
         
         # Email configuration
-        business_team = "adetayo.eyelade2@gmail.com"
-        from_email = "ajiboyemoyosola@gmail.com"
-        to_email = ["adetayo.eyelade@usach.cl"]
+        business_team = "xxxxxxx@gmail.com"
+        from_email = "yyyyyyyyy@gmail.com"
+        to_email = ["zzzzzzzz@usach.cl"]
         subject = "Better: Daily Cloud Report"
         body = f"""
 Hi all,

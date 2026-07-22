@@ -8,6 +8,7 @@ The project mirrors a production cloud operations workflow used for governance, 
 
 ## Table of Contents
 
+- [Project Output](#project-output)
 - [Architecture](#architecture)
 - [Project Highlights](#project-highlights)
 - [Tech Stack](#tech-stack)
@@ -15,7 +16,6 @@ The project mirrors a production cloud operations workflow used for governance, 
 - [Repository Structure](#repository-structure)
 - [Setup and Usage](#setup-and-usage)
 - [IAM Permissions](#iam-permissions)
-- [Sample Output](#sample-output)
 - [Challenges and Fixes](#challenges-and-fixes)
 - [Future Improvements](#future-improvements)
 - [Skills Demonstrated](#skills-demonstrated)
@@ -23,7 +23,17 @@ The project mirrors a production cloud operations workflow used for governance, 
 
 ---
 
-## Architecture
+# Project Output
+
+The automation inventories AWS resources, generates a consolidated JSON report, and automatically emails it to stakeholders.
+
+## Email Notification
+![Email Notification](docs/images/cloudReport.png)
+
+## Generated Report
+![Cloud Report](docs/images/generatedReports.png)
+
+# Architecture
 
 ```text
                 Amazon EventBridge
@@ -49,23 +59,19 @@ DescribeInstances ListFunctions ListBuckets
            Stakeholder Email Inbox
 ```
 
-The workflow is triggered on a schedule by Amazon EventBridge. The Lambda function queries multiple AWS services through `boto3`, consolidates the collected inventory into a single JSON report, stores the report in Lambda's temporary filesystem, and sends it as an email attachment using Amazon SES.
+# Project Highlights
 
----
-
-## Project Highlights
-
-- Automated AWS infrastructure inventory across EC2, Lambda, and S3
-- Built as both a local CLI application and an AWS Lambda function
-- Scheduled execution using Amazon EventBridge
-- Email delivery with MIME attachments via Amazon SES
+- Automated AWS inventory reporting across EC2, Lambda, and S3
+- Local CLI implementation and AWS Lambda deployment
+- Scheduled execution with Amazon EventBridge
+- Automated email delivery through Amazon SES
 - Structured exception handling for operational visibility
-- Designed with least-privilege IAM permissions
-- Production-style serverless reporting workflow
+- Least-privilege IAM implementation
+- Production-style serverless automation workflow
 
 ---
 
-## Tech Stack
+# Tech Stack
 
 - Python 3
 - boto3
@@ -80,31 +86,33 @@ The workflow is triggered on a schedule by Amazon EventBridge. The Lambda functi
 
 ---
 
-## Engineering Decisions
+# Engineering Decisions
 
-### Use AWS Lambda instead of an EC2 instance
+### Used AWS Lambda instead of Amazon EC2
 
-The reporting job executes only on a schedule, making AWS Lambda a more operationally efficient choice than maintaining a continuously running EC2 instance.
+Since the workload only runs on a schedule, AWS Lambda eliminates infrastructure management and reduces operational cost compared to maintaining an always-on EC2 instance.
 
-### Use EventBridge for scheduling
+### Used EventBridge for scheduling
 
-Amazon EventBridge provides a fully managed scheduler, eliminating the need for operating-system cron jobs or additional infrastructure.
+Amazon EventBridge provides fully managed scheduling without relying on cron jobs or dedicated servers.
 
-### Store reports in `/tmp`
+### Used Lambda's `/tmp` storage
 
-AWS Lambda provides writable temporary storage only in `/tmp`. Since the report is generated and emailed within a single execution, temporary storage avoids unnecessary complexity.
+AWS Lambda only allows write operations within `/tmp`. Since the report is generated and emailed during the same invocation, temporary storage keeps the workflow simple.
 
-### Maintain two execution models
+### Maintained two execution models
 
-The project includes both a standalone Python script for local testing and a Lambda implementation for production deployment. This improves developer productivity while preserving deployment flexibility.
+The repository includes both a standalone Python application and a Lambda implementation, allowing local development while supporting production deployment.
 
-### Implement structured exception handling
+### Implemented structured exception handling
 
-Errors are captured and returned as structured responses, improving CloudWatch observability and making failures easier to diagnose.
+Failures return consistent responses and are logged to CloudWatch, improving operational visibility and troubleshooting.
 
 ---
 
-## Repository Structure
+# Repository Structure
+
+![Email Notification](docs/images/cloudReport.png)
 
 ```text
 .
@@ -112,22 +120,27 @@ Errors are captured and returned as structured responses, improving CloudWatch o
 ├── lambda_code.py
 ├── cloud_report.txt
 ├── requirements.txt
+├── docs
+│   └── images
+│       ├── architecture.png
+│       ├── email-report.png
+│       └── cloud-report.png
 └── README.md
 ```
 
 | File | Description |
 |------|-------------|
-| `reportGeneration.py` | Standalone Python implementation for local execution |
+| `reportGeneration.py` | Standalone Python implementation |
 | `lambda_code.py` | AWS Lambda implementation |
-| `cloud_report.txt` | Sample generated inventory report |
-| `requirements.txt` | Project dependencies |
-| `README.md` | Project documentation |
+| `cloud_report.txt` | Example generated report |
+| `docs/images` | Screenshots used in the README |
+| `requirements.txt` | Python dependencies |
 
 ---
 
-## Setup and Usage
+# Setup and Usage
 
-### Clone the repository
+## Clone the repository
 
 ```bash
 git clone https://github.com/Evatee-coder/aws-cloud-inventory-reporting.git
@@ -135,7 +148,7 @@ git clone https://github.com/Evatee-coder/aws-cloud-inventory-reporting.git
 cd aws-cloud-inventory-reporting
 ```
 
-### Create a virtual environment
+## Create a virtual environment
 
 ```bash
 python3 -m venv .venv
@@ -143,13 +156,13 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-Windows PowerShell
+**Windows PowerShell**
 
 ```powershell
 .venv\Scripts\Activate.ps1
 ```
 
-### Install dependencies
+## Install dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -161,78 +174,39 @@ or
 pip install boto3
 ```
 
-### Configure AWS credentials
+## Configure AWS credentials
 
 ```bash
 aws configure
 ```
 
-Verify the configured identity
+Verify credentials
 
 ```bash
 aws sts get-caller-identity
 ```
 
-### Configure Amazon SES
+## Configure Amazon SES
 
-Verify the sender identity (or domain) in Amazon SES.
+Verify the sender identity (or domain).
 
-If your SES account is operating in the sandbox, the recipient email address must also be verified.
+If your SES account is in the sandbox, verify the recipient email address as well.
 
-### Run locally
+## Run locally
 
 ```bash
 python3 reportGeneration.py
 ```
 
-The generated report will be written to
-
-```text
-cloud_report.txt
-```
-
 ---
 
-## AWS Lambda Deployment
-
-Package the Lambda function
-
-```bash
-zip lambda_inventory.zip lambda_code.py
-```
-
-Create an AWS Lambda function using
-
-```text
-Runtime : Python 3.x
-
-Handler : lambda_code.lambda_handler
-```
-
-Attach an EventBridge schedule, for example
-
-```text
-rate(1 day)
-```
-
-or
-
-```text
-cron(0 8 * * ? *)
-```
-
----
-
-## IAM Permissions
-
-The Lambda execution role requires the following minimum permissions.
+# IAM Permissions
 
 ```json
 {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "InventoryReadAccess",
       "Effect": "Allow",
       "Action": [
         "ec2:DescribeInstances",
@@ -242,7 +216,6 @@ The Lambda execution role requires the following minimum permissions.
       "Resource": "*"
     },
     {
-      "Sid": "SendInventoryReport",
       "Effect": "Allow",
       "Action": [
         "ses:SendRawEmail"
@@ -253,54 +226,27 @@ The Lambda execution role requires the following minimum permissions.
 }
 ```
 
-The AWS managed policy **AWSLambdaBasicExecutionRole** should also be attached to enable CloudWatch logging.
+Attach the AWS managed policy:
+
+- `AWSLambdaBasicExecutionRole`
 
 ---
 
-## Sample Output
-
-```json
-{
-  "ec2_instances": [
-    {
-      "instance_id": "i-0123456789abcdef0",
-      "instance_type": "t3.micro",
-      "state": "running"
-    }
-  ],
-  "lambda_functions": [
-    {
-      "function_name": "inventory-report",
-      "runtime": "python3.12",
-      "last_modified": "2026-07-20T10:30:00+0000"
-    }
-  ],
-  "s3_buckets": [
-    {
-      "bucket_name": "company-backups",
-      "creation_date": "2026-01-15T14:20:00Z"
-    }
-  ]
-}
-```
-
----
-
-## Challenges and Fixes
+# Challenges and Fixes
 
 ### Lambda filesystem restrictions
 
-AWS Lambda provides a read-only execution environment except for the `/tmp` directory.
+AWS Lambda provides a read-only execution environment except for `/tmp`.
 
 **Resolution**
 
-The Lambda implementation writes reports to `/tmp/cloud_report.txt`, while the standalone application writes to the local project directory.
+Stored generated reports in `/tmp/cloud_report.txt` while preserving local filesystem support for the standalone application.
 
 ---
 
-### JSON serialization errors
+### JSON serialization failures
 
-Amazon S3 returns bucket creation dates as `datetime` objects, which cannot be serialized directly to JSON.
+Amazon S3 returns bucket creation dates as `datetime` objects that cannot be serialized directly to JSON.
 
 **Resolution**
 
@@ -310,45 +256,45 @@ json.dump(report_data, report_file, indent=4, default=str)
 
 ---
 
-### Improving operational visibility
+### Operational visibility
 
-Unhandled exceptions resulted in failed Lambda invocations with limited troubleshooting information.
+Unhandled exceptions resulted in inconsistent failures and limited troubleshooting information.
 
 **Resolution**
 
-Implemented structured exception handling that logs failures to CloudWatch and returns consistent success and error responses.
+Implemented structured exception handling with consistent status responses and CloudWatch logging.
 
 ---
 
-## Future Improvements
+# Future Improvements
 
-- Provision the complete solution with Terraform
+- Provision the solution with Terraform
 - Store configuration in AWS Systems Manager Parameter Store or AWS Secrets Manager
-- Add pagination support for large AWS environments
+- Add pagination support for large AWS accounts
 - Store historical reports in Amazon S3
 - Generate HTML and CSV reports
-- Add automated unit testing with `pytest` and `moto`
+- Add automated unit tests with `pytest` and `moto`
 - Build a GitHub Actions CI/CD pipeline
-- Publish CloudWatch metrics and alarms for failed executions
+- Publish CloudWatch metrics and alarms
 
 ---
 
-## Skills Demonstrated
+# Skills Demonstrated
 
-- AWS SDK development with `boto3`
+- AWS SDK development with boto3
 - Serverless application development
 - Event-driven architecture
 - AWS Lambda runtime optimization
 - IAM least-privilege design
-- JSON data modeling
 - Python automation
+- JSON data modeling
 - MIME email generation
-- Exception handling and observability
 - Cloud operations automation
+- Exception handling and observability
 
 ---
 
-## Author
+# Author
 
 **Adetayo Eyelade**
 
