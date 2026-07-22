@@ -8,9 +8,10 @@
 ![EventBridge](https://img.shields.io/badge/EventBridge-Scheduler-purple)
 ![Status](https://img.shields.io/badge/Project-Complete-success)
 
-Automates recurring AWS infrastructure inventory by collecting metadata from Amazon EC2, AWS Lambda, and Amazon S3, generating a structured JSON report, and delivering it to stakeholders through Amazon SES.
 
-The project mirrors a production cloud operations workflow used for governance, compliance reviews, cost visibility, and infrastructure reporting without requiring engineers to manually inspect multiple AWS services.
+Automates recurring AWS infrastructure inventory by discovering Amazon EC2 instances, AWS Lambda functions, and Amazon S3 buckets, generating a consolidated JSON inventory report, and distributing it via Amazon SES.
+
+The solution mirrors a production cloud operations workflow used for governance, compliance reporting, operational visibility, and cost reviews, eliminating repetitive manual inventory checks while providing stakeholders with scheduled, up-to-date infrastructure reports.
 
 ---
 
