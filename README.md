@@ -7,9 +7,6 @@
 ![SES](https://img.shields.io/badge/Email-Amazon_SES-yellow)
 ![EventBridge](https://img.shields.io/badge/EventBridge-Scheduler-purple)
 ![Status](https://img.shields.io/badge/Project-Complete-success)
-![GitHub last commit](https://img.shields.io/github/last-commit/Evatee-coder/aws-cloud-inventory-reporting)
-![GitHub repo size](https://img.shields.io/github/repo-size/Evatee-coder/aws-cloud-inventory-reporting)
-![GitHub stars](https://img.shields.io/github/stars/Evatee-coder/aws-cloud-inventory-reporting?style=social)
 
 Automates recurring AWS infrastructure inventory by collecting metadata from Amazon EC2, AWS Lambda, and Amazon S3, generating a structured JSON report, and delivering it to stakeholders through Amazon SES.
 
