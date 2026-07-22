@@ -269,7 +269,7 @@ Implemented structured exception handling with consistent status responses and C
 
 # Author
 
-**Adetayo Eyelade**
+**Victor Adetayo Eyelade**
 
 - GitHub: https://github.com/Evatee-coder
 - LinkedIn: https://www.linkedin.com/in/victor-adetayo-eyelade-a98606128/
