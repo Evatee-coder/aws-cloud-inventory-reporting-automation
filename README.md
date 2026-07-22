@@ -1,5 +1,16 @@
 # AWS Cloud Inventory Reporting Automation
 
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
+![AWS](https://img.shields.io/badge/AWS-Cloud-orange?logo=amazonaws)
+![Lambda](https://img.shields.io/badge/Lambda-Serverless-FF9900?logo=awslambda)
+![boto3](https://img.shields.io/badge/boto3-SDK-blue)
+![SES](https://img.shields.io/badge/Email-Amazon_SES-yellow)
+![EventBridge](https://img.shields.io/badge/EventBridge-Scheduler-purple)
+![Status](https://img.shields.io/badge/Project-Complete-success)
+![GitHub last commit](https://img.shields.io/github/last-commit/Evatee-coder/aws-cloud-inventory-reporting)
+![GitHub repo size](https://img.shields.io/github/repo-size/Evatee-coder/aws-cloud-inventory-reporting)
+![GitHub stars](https://img.shields.io/github/stars/Evatee-coder/aws-cloud-inventory-reporting?style=social)
+
 Automates recurring AWS infrastructure inventory by collecting metadata from Amazon EC2, AWS Lambda, and Amazon S3, generating a structured JSON report, and delivering it to stakeholders through Amazon SES.
 
 The project mirrors a production cloud operations workflow used for governance, compliance reviews, cost visibility, and infrastructure reporting without requiring engineers to manually inspect multiple AWS services.
@@ -114,27 +125,13 @@ Failures return consistent responses and are logged to CloudWatch, improving ope
 
 ![Repository Structure](docs/images/repoStructure.png)
 
-```text
-.
-├── reportGeneration.py
-├── lambda_code.py
-├── cloud_report.txt
-├── requirements.txt
-├── docs
-│   └── images
-│       ├── architecture.png
-│       ├── email-report.png
-│       └── cloud-report.png
-└── README.md
-```
-
 | File | Description |
 |------|-------------|
 | `reportGeneration.py` | Standalone Python implementation |
 | `lambda_code.py` | AWS Lambda implementation |
 | `cloud_report.txt` | Example generated report |
 | `docs/images` | Screenshots used in the README |
-| `requirements.txt` | Python dependencies |
+
 
 ---
 
@@ -156,34 +153,10 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-**Windows PowerShell**
-
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
 ## Install dependencies
 
 ```bash
-pip install -r requirements.txt
-```
-
-or
-
-```bash
 pip install boto3
-```
-
-## Configure AWS credentials
-
-```bash
-aws configure
-```
-
-Verify credentials
-
-```bash
-aws sts get-caller-identity
 ```
 
 ## Configure Amazon SES
